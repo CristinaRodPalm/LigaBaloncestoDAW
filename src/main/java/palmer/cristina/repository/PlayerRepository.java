@@ -30,10 +30,11 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     // f. Agrupar los jugadores por la posición del campo y devolver para cada grupo la siguiente información: la media de canastas, asistencias y rebotes.
     @Query("select avg(p.baskets), avg(p.assists), avg(p.rebound), p.position from Player p group by p.position")
-    List<Object[]> findPlayerByPositionQuery ();
+    List<Object[]> findAvgOfBasketsAssistsReboundByPosition ();
 
     // g. Lo mismo que el punto anterior pero devolviendo la media, el máximo y el mínimo de canastas, asistencias y rebotes.
-
+    @Query("select p.position, avg(p.baskets), max(p.baskets), min(p.baskets), avg(p.assists), max(p.assists), min(p.assists), avg(p.rebound), max(p.rebound), min(p.rebound) from Player p group by p.position")
+    List<Object[]> findAvgMinMaxOfBasketsAssistsReboundByPosition ();
 
 }
 
