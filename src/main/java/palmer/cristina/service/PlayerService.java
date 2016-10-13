@@ -1,11 +1,12 @@
 package palmer.cristina.service;
 
-import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import palmer.cristina.domain.Player;
 import palmer.cristina.domain.Position;
+import palmer.cristina.domain.Team;
 import palmer.cristina.repository.PlayerRepository;
+import palmer.cristina.repository.TeamRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,24 +18,41 @@ import java.util.List;
 public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
+    @Autowired
+    private TeamRepository teamRepository;
 
 
     public void crearJugadores() {
 
+        // Creando equipos
+        Team team1 = new Team("team1", "Barcelona", LocalDate.of(2010, 01, 20));
+        teamRepository.save(team1);
+        Team team2 = new Team("team2", "Madrid", LocalDate.of(2009, 02, 20));
+        teamRepository.save(team2);
+        Team team3 = new Team("team3", "Barcelona", LocalDate.of(2008, 02, 20));
+        teamRepository.save(team3);
+
+        //Creando jugadores
         Player player1 = new Player("Paco", LocalDate.of(2001, 10, 10), 1, 11, 25, Position.GUARDS);
+        player1.setTeam(team1);
         playerRepository.save(player1);
         Player player2 = new Player("Juancho", LocalDate.of(2002, 10, 10), 2, 12, 26, Position.CENTER);
+        player2.setTeam(team2);
         playerRepository.save(player2);
         Player player3 = new Player("Deivi", LocalDate.of(2003, 10, 10), 3, 13, 27, Position.SHOOTER);
+        player3.setTeam(team3);
         playerRepository.save(player3);
         Player player4 = new Player("Aivan", LocalDate.of(2004, 10, 10), 4, 14, 28, Position.CENTER);
+        player4.setTeam(team2);
         playerRepository.save(player4);
         Player player5 = new Player("Alesandro", LocalDate.of(2005, 10, 10), 5, 15, 29, Position.SHOOTER);
+        player5.setTeam(team2);
         playerRepository.save(player5);
-
     }
 
-    public void test(){
+
+
+    public void testPlayer(){
         System.out.println(playerRepository.findByNameStartingWith("D"));
         System.out.println(playerRepository.findByBasketsGreaterThanEqual(4));
         System.out.println(playerRepository.findByBirthDateAfter(LocalDate.of(2003, 10, 12)));
@@ -51,8 +69,6 @@ public class PlayerService {
             System.out.println("Assists statistics -> avg: "+aux[4]+", max, "+aux[5]+", min "+aux[6]);
             System.out.println("Rebound statistics -> avg: "+aux[7]+", max, "+aux[8]+", min "+aux[9]);
         }
-
-        //p.position, avg(p.baskets), max(p.baskets), min(p.baskets), avg(p.assists), max(p.assists), min(p.assists), avg(p.rebound), max(p.rebound), min(p.rebound)
     }
 }
 

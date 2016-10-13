@@ -20,6 +20,9 @@ public class Player {
     @Enumerated(EnumType.STRING)
     private Position position;
 
+    @ManyToOne  //un jugador sólo puede pertenecer a un equipo
+    private Team team;
+
     public Player() {
     }
 
@@ -30,6 +33,14 @@ public class Player {
         this.assists = assists;
         this.rebound = rebound;
         this.position = position;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public long getId() {
