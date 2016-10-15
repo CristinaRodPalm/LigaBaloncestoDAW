@@ -24,13 +24,10 @@ public class PlayerService {
 
     public void crearJugadores() {
 
-        // Creando equipos
-        Team team1 = new Team("team1", "Barcelona", LocalDate.of(2010, 01, 20));
-        teamRepository.save(team1);
-        Team team2 = new Team("team2", "Madrid", LocalDate.of(2009, 02, 20));
-        teamRepository.save(team2);
-        Team team3 = new Team("team3", "Barcelona", LocalDate.of(2008, 02, 20));
-        teamRepository.save(team3);
+        // Buscar equipos
+        Team team1 = teamRepository.findOne(1L);
+        Team team2 = teamRepository.findOne(2L);
+        Team team3 = teamRepository.findOne(3L);
 
         //Creando jugadores
         Player player1 = new Player("Paco", LocalDate.of(2001, 10, 10), 1, 11, 25, Position.GUARDS);
@@ -57,7 +54,18 @@ public class PlayerService {
         System.out.println(playerRepository.findByBasketsGreaterThanEqual(4));
         System.out.println(playerRepository.findByBirthDateAfter(LocalDate.of(2003, 10, 12)));
         System.out.println(playerRepository.findByPositionEquals(Position.SHOOTER));
-        List<Object[]> avg = playerRepository.findAvgOfBasketsAssistsReboundByPosition();
+
+        playerRepository.
+                findAvgOfBasketsAssistsReboundByPosition().
+                forEach(player -> System.out.println(player[3]+", avg baskets: "+player[0]+", avg assists: "+player[1]+", avg rebound: "+player[2]));
+
+        playerRepository.findAvgMinMaxOfBasketsAssistsReboundByPosition().
+                forEach(aux -> System.out.println(aux[0] +"\n " +
+                        "Basket statistics -> avg: "+aux[1]+", max, "+aux[2]+", min "+aux[3]+
+                        "Assists statistics -> avg: "+aux[4]+", max, "+aux[5]+", min "+aux[6]+
+                        "Rebound statistics -> avg: "+aux[7]+", max, "+aux[8]+", min "+aux[9]));
+
+        /*List<Object[]> avg = playerRepository.findAvgOfBasketsAssistsReboundByPosition();
         for (Object[] player : avg) {
             System.out.println(player[3]+", avg baskets: "+player[0]+", avg assists: "+player[1]+", avg rebound: "+player[2]);
         }
@@ -69,6 +77,7 @@ public class PlayerService {
             System.out.println("Assists statistics -> avg: "+aux[4]+", max, "+aux[5]+", min "+aux[6]);
             System.out.println("Rebound statistics -> avg: "+aux[7]+", max, "+aux[8]+", min "+aux[9]);
         }
+        */
     }
 }
 

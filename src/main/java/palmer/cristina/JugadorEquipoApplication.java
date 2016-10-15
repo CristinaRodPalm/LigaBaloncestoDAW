@@ -17,6 +17,8 @@ public class JugadorEquipoApplication {
         TeamService teamService = context.getBean(TeamService.class);
         PlayerService playerService = context.getBean(PlayerService.class);
 
+        teamService.createTeam();
+
         playerService.crearJugadores();
         playerService.testPlayer();
 

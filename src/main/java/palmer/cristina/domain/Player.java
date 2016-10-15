@@ -109,6 +109,7 @@ public class Player {
                 ", assists=" + assists +
                 ", rebound=" + rebound +
                 ", position=" + position +
+                ", team=" + team +
                 '}';
     }
 }
