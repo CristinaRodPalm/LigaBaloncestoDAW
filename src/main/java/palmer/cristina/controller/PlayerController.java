@@ -23,13 +23,13 @@ public class PlayerController {
     // POST
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Player save(@RequestBody Player player){
+    public Player createPlayer(@RequestBody Player player){
         return playerRepository.save(player);
     }
 
     // GET
     @RequestMapping(method = RequestMethod.GET)
-    public List<Player> findAll(){
+    public List<Player> findAllPlayers(){
         List<Player> players = new ArrayList<Player>();
         Iterator<Player> iterator = playerRepository.findAll().iterator();
         while(iterator.hasNext()){
@@ -40,7 +40,7 @@ public class PlayerController {
 
     // DELETE
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteById(@PathVariable Long id){
+    public void deletePlayerId(@PathVariable Long id){
         Player player = playerRepository.findOne(id);
         //if(player == null) throw new PlayerException(id);
         if(player != null) playerRepository.delete(id);
@@ -48,7 +48,7 @@ public class PlayerController {
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Player updateById(@PathVariable Long id, @RequestBody Player player){
+    public Player updatePlayerId(@PathVariable Long id, @RequestBody Player player){
         Player p = playerRepository.findOne(id);
         //if(p == null) throw new PlayerException(id);
         if(p == player) return null;
