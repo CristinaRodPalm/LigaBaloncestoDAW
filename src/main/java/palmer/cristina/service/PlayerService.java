@@ -9,7 +9,6 @@ import palmer.cristina.repository.PlayerRepository;
 import palmer.cristina.repository.TeamRepository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Created by Cristina on 10/10/2016.

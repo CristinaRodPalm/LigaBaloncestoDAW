@@ -3,7 +3,6 @@ package palmer.cristina;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import palmer.cristina.domain.Team;
 import palmer.cristina.service.PlayerService;
 import palmer.cristina.service.TeamService;
 

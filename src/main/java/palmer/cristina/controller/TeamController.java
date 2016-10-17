@@ -3,9 +3,7 @@ package palmer.cristina.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import palmer.cristina.domain.Player;
 import palmer.cristina.domain.Team;
-import palmer.cristina.repository.PlayerRepository;
 import palmer.cristina.repository.TeamRepository;
 
 import java.util.ArrayList;

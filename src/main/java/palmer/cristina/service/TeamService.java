@@ -2,14 +2,11 @@ package palmer.cristina.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import palmer.cristina.domain.Player;
 import palmer.cristina.domain.Position;
 import palmer.cristina.domain.Team;
-import palmer.cristina.repository.PlayerRepository;
 import palmer.cristina.repository.TeamRepository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Created by Cristina on 13/10/2016.
