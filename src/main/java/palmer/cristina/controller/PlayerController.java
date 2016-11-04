@@ -28,16 +28,15 @@ public class PlayerController {
     @Autowired
     private PlayerRepository playerRepository;
 
-    // POST
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Player createPlayer(@RequestBody Player player){
         return playerRepository.save(player);
     }
 
     // GET
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Player> findAllPlayers(){
+    @GetMapping
+    public List<Player> getAllPlayer(){
         List<Player> players = new ArrayList<Player>();
         Iterator<Player> iterator = playerRepository.findAll().iterator();
         while(iterator.hasNext()){
@@ -47,29 +46,35 @@ public class PlayerController {
     }
 
     // DELETE
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deletePlayerId(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public void deletePlayerID(@PathVariable Long id){
         Player player = playerRepository.findOne(id);
         //if(player == null) throw new PlayerException(id);
         if(player != null) playerRepository.delete(id);
     }
 
     // PUT
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Player updatePlayerId(@PathVariable Long id, @RequestBody Player player){
+    @PutMapping("/{id}")
+    public Player updatePlayerID(@PathVariable Long id, @RequestBody Player player){
         Player p = playerRepository.findOne(id);
         //if(p == null) throw new PlayerException(id);
         if(p == player) return null;
         return playerRepository.save(player);
     }
 
-    // GET 1 PLAYER -> java8
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed(millis = 1000)
-    public ResponseEntity<Player> getPlayer(@PathVariable Long id){
+    // PUT
+    @PutMapping
+    public Player updatePlayer(@RequestBody Player player){
+        return playerRepository.save(player);
+    }
+
+    // GET 1 PLAYER -
+    @GetMapping("/{id}")
+    public ResponseEntity<Player> getPlayerID(@PathVariable Long id){
         Player player = playerRepository.findOne(id);
         return Optional.ofNullable(player)
                 .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
                 .orElse(new ResponseEntity<Player>(HttpStatus.NOT_FOUND));
     }
+
 }

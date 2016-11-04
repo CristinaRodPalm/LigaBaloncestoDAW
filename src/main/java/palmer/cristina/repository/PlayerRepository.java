@@ -19,7 +19,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     List<Player> findByNameStartingWith(String name);
 
     // b. Buscar jugadores que hayan conseguido un número mayor o igual a un número de canastas especificado como parámetro.
-    List<Player> findByBasketsGreaterThanEqual(int baskets);
+    List<Player> findByBasketsGreaterThanEqual  (int baskets);
 
     // c. Buscar jugadores que pertenezcan a una posición específica, por ejemplo: base.
     List<Player> findByPositionEquals(Position position);
@@ -36,5 +36,3 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     List<Object[]> findAvgMinMaxOfBasketsAssistsReboundByPosition ();
 
 }
-
-
