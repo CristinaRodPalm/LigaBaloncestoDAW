@@ -1,5 +1,6 @@
 package palmer.cristina.controller;
 
+import org.hibernate.type.AnyType;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,12 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Timed;
 import org.springframework.web.bind.annotation.*;
 import palmer.cristina.domain.Player;
+import palmer.cristina.domain.Position;
+import palmer.cristina.domain.Statistic;
 import palmer.cristina.repository.PlayerRepository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Cristina on 16/10/2016.
@@ -77,4 +77,35 @@ public class PlayerController {
                 .orElse(new ResponseEntity<Player>(HttpStatus.NOT_FOUND));
     }
 
+    // GET --> ORDER BY BASKETS DESC
+    @GetMapping("/byBaskets")
+    public List<Player> orderByBaskets() {
+        return playerRepository.orderByBaskets();
+    }
+
+    // GET --> BASKETS GREATHER THAN EQUAL
+    @GetMapping("/byBaskets/{num}")
+    public List<Player> findByBasketsGreaterThanEqual(@PathVariable Integer num) {
+        return playerRepository.findByBasketsGreaterThanEqual(num);
+    }
+
+    // GET --> BASKETS BETWEEN
+    @GetMapping("/byBaskets/{min}/{max}")
+    public List<Player> findByBasketsBetween(@PathVariable Integer min, @PathVariable Integer max) {
+        return playerRepository.findByBasketsBetween(min, max);
+    }
+
+    // Get
+    @GetMapping("/byPosition")
+    public Map<Position, Statistic> groupByPosition(){
+        List<Object[]> jugs = playerRepository.groupByPosition();
+
+        Map<Position, Statistic> posis = new HashMap<>();
+
+        for (Object[] p: jugs) {
+            Statistic aux = new Statistic((Position) p[0], (double) p[1], (double) p[2], (double) p[3]);
+            posis.put(aux.getPosition(), aux);
+        }
+        return posis;
+    }
 }

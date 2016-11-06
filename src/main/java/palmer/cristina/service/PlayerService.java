@@ -10,6 +10,10 @@ import palmer.cristina.repository.PlayerRepository;
 import palmer.cristina.repository.TeamRepository;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Cristina on 10/10/2016.
@@ -21,37 +25,33 @@ public class PlayerService {
     @Autowired
     private TeamRepository teamRepository;
 
-    private PlayerController playerController;
-
-
     public void crearJugadores() {
-
         // Buscar equipos
         Team team1 = teamRepository.findOne(1L);
         Team team2 = teamRepository.findOne(2L);
         Team team3 = teamRepository.findOne(3L);
 
         //Creando jugadores
-        Player player1 = new Player("Paco", LocalDate.of(2001, 10, 10), 1, 11, 25, Position.GUARDS);
-        player1.setTeam(team1);
+        Player player1 = new Player("Paco", LocalDate.of(2001, 10, 10), 1, 11, 25, Position.GUARDS, team1);
         playerRepository.save(player1);
-        Player player2 = new Player("Juancho", LocalDate.of(2002, 10, 10), 2, 12, 26, Position.CENTER);
-        player2.setTeam(team2);
+
+        Player player2 = new Player("Juancho", LocalDate.of(2002, 10, 10), 2, 12, 26, Position.CENTER, team2);
         playerRepository.save(player2);
-        Player player3 = new Player("Deivi", LocalDate.of(2003, 10, 10), 3, 13, 27, Position.SHOOTER);
-        player3.setTeam(team3);
+
+        Player player3 = new Player("Deivi", LocalDate.of(2003, 10, 10), 3, 13, 27, Position.SHOOTER, team3);
         playerRepository.save(player3);
-        Player player4 = new Player("Aivan", LocalDate.of(2004, 10, 10), 4, 14, 28, Position.CENTER);
-        player4.setTeam(team2);
+
+        Player player4 = new Player("Aivan", LocalDate.of(2004, 10, 10), 4, 14, 28, Position.CENTER, team2);
         playerRepository.save(player4);
-        Player player5 = new Player("Alesandro", LocalDate.of(2005, 10, 10), 5, 15, 29, Position.SHOOTER);
-        player5.setTeam(team2);
+
+        Player player5 = new Player("Alesandro", LocalDate.of(2005, 10, 10), 5, 15, 29, Position.SHOOTER, team2);
         playerRepository.save(player5);
     }
 
     public void testPlayer(){
         System.out.println(playerRepository.findByNameStartingWith("D"));
         System.out.println(playerRepository.findByBasketsGreaterThanEqual(4));
+        System.out.println(playerRepository.findByAssistsBetween(6, 13));
         System.out.println(playerRepository.findByBirthDateAfter(LocalDate.of(2003, 10, 12)));
         System.out.println(playerRepository.findByPositionEquals(Position.SHOOTER));
 

@@ -26,13 +26,14 @@ public class Player {
     public Player() {
     }
 
-    public Player(String name, LocalDate birthDate, int baskets, int assists, int rebound, Position position) {
+    public Player(String name, LocalDate birthDate, int baskets, int assists, int rebound, Position position, Team  team) {
         this.name = name;
         this.birthDate = birthDate;
         this.baskets = baskets;
         this.assists = assists;
         this.rebound = rebound;
         this.position = position;
+        this.team = team;
     }
 
     public Team getTeam() {
