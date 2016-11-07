@@ -23,6 +23,7 @@ public class PlayerController {
     @Autowired
     private PlayerRepository playerRepository;
 
+    // POST
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Player createPlayer(@RequestBody Player player){
@@ -44,26 +45,15 @@ public class PlayerController {
     @DeleteMapping("/{id}")
     public void deletePlayerID(@PathVariable Long id){
         Player player = playerRepository.findOne(id);
-        //if(player == null) throw new PlayerException(id);
         if(player != null) playerRepository.delete(id);
     }
 
     // PUT
-    @PutMapping("/{id}")
-    public Player updatePlayerID(@PathVariable Long id, @RequestBody Player player){
-        Player p = playerRepository.findOne(id);
-        //if(p == null) throw new PlayerException(id);
-        if(p == player) return null;
-        return playerRepository.save(player);
-    }
-
-    // PUT
     @PutMapping
-    public Player updatePlayer(@RequestBody Player player){
+    public Player updatePlayer(@RequestBody Player player) {
         return playerRepository.save(player);
     }
-
-    // GET 1 PLAYER -
+    // GET 1 PLAYER
     @GetMapping("/{id}")
     public ResponseEntity<Player> getPlayerID(@PathVariable Long id){
         Player player = playerRepository.findOne(id);
@@ -104,10 +94,10 @@ public class PlayerController {
         return posis;
     }
 
-    // GET --> ??
-    @GetMapping("/byPositionAll/{position}")
-    public List<Player> groupByPositionAll(@PathVariable Position position){
-        List<Player> players = playerRepository.groupByPositionAll(position);
+    // GET --> SHOW ALL THE PLAYERS WITH THE SAME POSITION ORDERED BY BASKETS
+    @GetMapping("/playersByPositionBaskets")
+    public Map<Position, Collection<Player>> playersByPositionBaskets(){
+        List<Player> players = playerRepository.playersByPositionBaskets();
 
         ListMultimap<Position, Player> playerMultiMap = ArrayListMultimap.create();
 
@@ -115,6 +105,6 @@ public class PlayerController {
             playerMultiMap.put(p.getPosition(), p);
         }
 
-        return playerMultiMap.get(position);
+        return playerMultiMap.asMap();
     }
 }

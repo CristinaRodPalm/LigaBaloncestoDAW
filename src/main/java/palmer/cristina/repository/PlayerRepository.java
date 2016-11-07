@@ -46,7 +46,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     //    --> Práctica 2
 
     // 1. Devolver todos los jugadores ordenados por número de canastas.
-    @Query("select p from Player p order by p.position desc")
+    @Query("select p from Player p order by p.baskets asc")
     List<Player> orderByBaskets();
 
     //2. Devolver todos los jugadores que han conseguido un número de canastas igual o superior a un parámetro especificado en la URL.
@@ -61,7 +61,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     // 5. Devolver los jugadores agrupados por posición mediante un Map. Para cada posición mostrar las siguientes estadísticas:
         // mínimo, máximo y media del número de canastas (podéis experimentar con otros valores como, por ejemplo, asistencias).
-    @Query("select p from Player p where p.position = :position")
-    List<Player> groupByPositionAll(@Param("position") Position position);
+    @Query("select p from Player p order by p.baskets")
+    List<Player> playersByPositionBaskets();
 
 }

@@ -1,5 +1,7 @@
 package palmer.cristina.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -13,6 +15,7 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
+    @JsonIgnore
     private LocalDate birthDate;
     private int baskets;
     private int assists;

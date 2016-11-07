@@ -1,5 +1,7 @@
 package palmer.cristina.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +18,7 @@ public class Team {
     private long id;
     private String name;
     private String city;
+    @JsonIgnore
     private LocalDate date;
 
     public Team() {}

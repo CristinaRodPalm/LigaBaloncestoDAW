@@ -21,15 +21,15 @@ public class TeamController {
     private TeamRepository teamRepository;
 
     // POST
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Team save(@RequestBody Team team){
+    public Team createTeam(@RequestBody Team team){
         return teamRepository.save(team);
     }
 
     // GET
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Team> findAll(){
+    @GetMapping
+    public List<Team> getAllTeams(){
         List<Team> teams = new ArrayList<Team>();
         Iterator<Team> iterator = teamRepository.findAll().iterator();
         while(iterator.hasNext()){
@@ -39,18 +39,16 @@ public class TeamController {
     }
 
     // DELETE
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteById(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteTeamID(@PathVariable Long id) {
         Team team = teamRepository.findOne(id);
-        //if(team == null) throw new TeamException(id);
         if (team != null) teamRepository.delete(id);
     }
 
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Team updateById(@PathVariable Long id, @RequestBody Team team){
+    // PUT
+    @PutMapping("/{id}")
+    public Team updateTeamID(@PathVariable Long id, @RequestBody Team team){
         Team t = teamRepository.findOne(id);
-        //if(t == null) throw new TeamException(id);
         if(t == team) return null;
         return teamRepository.save(team);
     }
