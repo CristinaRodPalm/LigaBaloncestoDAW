@@ -1,7 +1,6 @@
 package palmer.cristina.domain;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 /**
  * Created by User on 06/11/2016.
@@ -14,14 +13,14 @@ public class Statistic {
     @Enumerated(EnumType.STRING)
     private Position position;
     private double avgBaskets;
-    private double avgAssists;
-    private double avgRebound;
+    private int minBaskets;
+    private int maxBaskets;
 
-    public Statistic(Position position, double avgBaskets, double avgAssists, double avgRebound) {
+    public Statistic(Position position, double avgBaskets, int minBaskets, int maxBaskets) {
         this.position = position;
         this.avgBaskets = avgBaskets;
-        this.avgAssists = avgAssists;
-        this.avgRebound = avgRebound;
+        this.minBaskets = minBaskets;
+        this.maxBaskets = maxBaskets;
     }
 
     public Position getPosition() {
@@ -40,19 +39,19 @@ public class Statistic {
         this.avgBaskets = avgBaskets;
     }
 
-    public double getAvgAssists() {
-        return avgAssists;
+    public int getMinBaskets() {
+        return minBaskets;
     }
 
-    public void setAvgAssists(double avgAssists) {
-        this.avgAssists = avgAssists;
+    public void setMinBaskets(int minBaskets) {
+        this.minBaskets = minBaskets;
     }
 
-    public double getAvgRebound() {
-        return avgRebound;
+    public int getMaxBaskets() {
+        return maxBaskets;
     }
 
-    public void setAvgRebound(double avgRebound) {
-        this.avgRebound = avgRebound;
+    public void setMaxBaskets(int maxBaskets) {
+        this.maxBaskets = maxBaskets;
     }
 }

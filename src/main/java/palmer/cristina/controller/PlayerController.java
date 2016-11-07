@@ -1,15 +1,10 @@
 package palmer.cristina.controller;
 
-import org.hibernate.type.AnyType;
-import org.slf4j.LoggerFactory;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.Timed;
 import org.springframework.web.bind.annotation.*;
 import palmer.cristina.domain.Player;
 import palmer.cristina.domain.Position;
@@ -95,17 +90,31 @@ public class PlayerController {
         return playerRepository.findByBasketsBetween(min, max);
     }
 
-    // Get
+    // GET --> AVG BASKETS, ASSISTS, REBOUND FROM ALL PLAYERS SAME POSITION
     @GetMapping("/byPosition")
     public Map<Position, Statistic> groupByPosition(){
-        List<Object[]> jugs = playerRepository.groupByPosition();
+        List<Object[]> players = playerRepository.groupByPosition();
 
         Map<Position, Statistic> posis = new HashMap<>();
 
-        for (Object[] p: jugs) {
-            Statistic aux = new Statistic((Position) p[0], (double) p[1], (double) p[2], (double) p[3]);
+        for (Object[] p: players) {
+            Statistic aux = new Statistic((Position) p[0], (double) p[1], (int) p[2], (int) p[3]);
             posis.put(aux.getPosition(), aux);
         }
         return posis;
+    }
+
+    // GET --> ??
+    @GetMapping("/byPositionAll/{position}")
+    public List<Player> groupByPositionAll(@PathVariable Position position){
+        List<Player> players = playerRepository.groupByPositionAll(position);
+
+        ListMultimap<Position, Player> playerMultiMap = ArrayListMultimap.create();
+
+        for(Player p: players){
+            playerMultiMap.put(p.getPosition(), p);
+        }
+
+        return playerMultiMap.get(position);
     }
 }

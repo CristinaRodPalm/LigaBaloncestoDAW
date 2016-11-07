@@ -1,8 +1,10 @@
 package palmer.cristina.repository;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.query.Param;
 import palmer.cristina.domain.Player;
 import palmer.cristina.domain.Position;
 
@@ -54,11 +56,12 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     List<Player> findByBasketsBetween(int min, int max);
 
     // 4. Devolver los jugadores agrupados por posición mediante un Map.
-    @Query("select p.position, avg(p.baskets), avg(p.assists), avg(p.rebound) from Player p group by p.position")
+    @Query("select p.position, min(p.baskets), max(p.baskets), avg(p.baskets) from Player p group by p.position")
     List<Object[]> groupByPosition();
 
     // 5. Devolver los jugadores agrupados por posición mediante un Map. Para cada posición mostrar las siguientes estadísticas:
         // mínimo, máximo y media del número de canastas (podéis experimentar con otros valores como, por ejemplo, asistencias).
-
+    @Query("select p from Player p where p.position = :position")
+    List<Player> groupByPositionAll(@Param("position") Position position);
 
 }
