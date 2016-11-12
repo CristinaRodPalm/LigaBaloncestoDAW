@@ -3,6 +3,7 @@ package palmer.cristina.controller;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -88,7 +89,7 @@ public class PlayerController {
         Map<Position, Statistic> posis = new HashMap<>();
 
         for (Object[] p: players) {
-            Statistic aux = new Statistic((Position) p[0], (double) p[1], (int) p[2], (int) p[3]);
+            Statistic aux = new Statistic((Position) p[0], (int) p[1], (int) p[2], (double) p[3]);
             posis.put(aux.getPosition(), aux);
         }
         return posis;
@@ -97,14 +98,27 @@ public class PlayerController {
     // GET --> SHOW ALL THE PLAYERS WITH THE SAME POSITION ORDERED BY BASKETS
     @GetMapping("/playersByPositionBaskets")
     public Map<Position, Collection<Player>> playersByPositionBaskets(){
-        List<Player> players = playerRepository.playersByPositionBaskets();
 
         ListMultimap<Position, Player> playerMultiMap = ArrayListMultimap.create();
 
-        for(Player p: players){
+        playerRepository.playersByPositionBaskets().forEach(
+                player -> playerMultiMap.put(player.getPosition(), player)
+        );
+        /*List<Player> players = playerRepository.playersByPositionBaskets();
+
+        for( Player p : players){
             playerMultiMap.put(p.getPosition(), p);
-        }
+        }*/
 
         return playerMultiMap.asMap();
+    }
+
+    // GET --> ORDER PLAYERS BY PARAM
+    @GetMapping("/byParams")
+    public List<Player> orderByParam(@RequestParam(name = "orderBy") String orderBy){
+        if(orderBy != null) {
+            return playerRepository.findAll(new Sort(Sort.Direction.DESC, orderBy));
+        }
+        return playerRepository.findAll();
     }
 }

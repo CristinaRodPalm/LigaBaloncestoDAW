@@ -30,4 +30,5 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
     // d. Devuelve el jugador que más canastas ha realizado de un equipo determinado como parámetro.
     @Query("select p from Player p, Team t where t.id = p.team and t.name = :teamName order by baskets desc")
     List<Player> findMoreBasketsByTeam(@Param("teamName") String name);
+
 }

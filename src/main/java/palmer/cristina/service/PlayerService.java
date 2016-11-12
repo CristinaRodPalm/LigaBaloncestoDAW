@@ -48,7 +48,7 @@ public class PlayerService {
         playerRepository.save(player5);
     }
 
-    public void testPlayer(){
+    public void testPlayer() {
         System.out.println(playerRepository.findByNameStartingWith("D"));
         System.out.println(playerRepository.findByBasketsGreaterThanEqual(4));
         System.out.println(playerRepository.findByAssistsBetween(6, 13));
@@ -57,14 +57,12 @@ public class PlayerService {
 
         playerRepository.
                 findAvgOfBasketsAssistsReboundByPosition().
-                forEach(player -> System.out.println(player[3]+", avg baskets: "+player[0]+", avg assists: "+player[1]+", avg rebound: "+player[2]));
+                forEach(player -> System.out.println(player[3] + ", avg baskets: " + player[0] + ", avg assists: " + player[1] + ", avg rebound: " + player[2]));
 
         playerRepository.findAvgMinMaxOfBasketsAssistsReboundByPosition().
                 forEach(aux -> System.out.println(aux[0] +
-                        "\nBasket statistics -> avg: "+aux[1]+", max, "+aux[2]+", min "+aux[3]+
-                        "\nAssists statistics -> avg: "+aux[4]+", max, "+aux[5]+", min "+aux[6]+
-                        "\nRebound statistics -> avg: "+aux[7]+", max, "+aux[8]+", min "+aux[9]));
+                        "\nBasket statistics -> avg: " + aux[1] + ", max, " + aux[2] + ", min " + aux[3] +
+                        "\nAssists statistics -> avg: " + aux[4] + ", max, " + aux[5] + ", min " + aux[6] +
+                        "\nRebound statistics -> avg: " + aux[7] + ", max, " + aux[8] + ", min " + aux[9]));
     }
 }
-
-

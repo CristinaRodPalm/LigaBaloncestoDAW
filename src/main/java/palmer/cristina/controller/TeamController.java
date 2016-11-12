@@ -1,14 +1,17 @@
 package palmer.cristina.controller;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import palmer.cristina.domain.Player;
+import palmer.cristina.domain.Position;
+import palmer.cristina.domain.Statistic;
 import palmer.cristina.domain.Team;
 import palmer.cristina.repository.TeamRepository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Cristina on 16/10/2016.
@@ -51,5 +54,15 @@ public class TeamController {
         Team t = teamRepository.findOne(id);
         if(t == team) return null;
         return teamRepository.save(team);
+    }
+
+    // GET --> TEAMS GROUP BY CITY (multimap)
+    @GetMapping("/byCity")
+    public Map<String, Collection<Team>> groupByCity(){
+        ListMultimap<String, Team> mapTeamCity = ArrayListMultimap.create();
+
+        teamRepository.findAll().forEach(t -> mapTeamCity.put(t.getCity(), t));
+
+        return mapTeamCity.asMap();
     }
 }

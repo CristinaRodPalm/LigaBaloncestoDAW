@@ -64,4 +64,5 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     @Query("select p from Player p order by p.baskets")
     List<Player> playersByPositionBaskets();
 
+
 }

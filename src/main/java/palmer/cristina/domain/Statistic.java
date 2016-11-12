@@ -16,11 +16,11 @@ public class Statistic {
     private int minBaskets;
     private int maxBaskets;
 
-    public Statistic(Position position, double avgBaskets, int minBaskets, int maxBaskets) {
+    public Statistic(Position position, int minBaskets, int maxBaskets, double avgBaskets) {
         this.position = position;
-        this.avgBaskets = avgBaskets;
         this.minBaskets = minBaskets;
         this.maxBaskets = maxBaskets;
+        this.avgBaskets = avgBaskets;
     }
 
     public Position getPosition() {
