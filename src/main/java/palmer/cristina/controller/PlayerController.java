@@ -13,6 +13,7 @@ import palmer.cristina.domain.Statistic;
 import palmer.cristina.repository.PlayerRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Cristina on 16/10/2016.
@@ -54,6 +55,7 @@ public class PlayerController {
     public Player updatePlayer(@RequestBody Player player) {
         return playerRepository.save(player);
     }
+
     // GET 1 PLAYER
     @GetMapping("/{id}")
     public ResponseEntity<Player> getPlayerID(@PathVariable Long id){
@@ -96,7 +98,15 @@ public class PlayerController {
     }
 
     // GET --> SHOW ALL THE PLAYERS WITH THE SAME POSITION ORDERED BY BASKETS
+    // NUEVO MÉTODO JAVA 8
     @GetMapping("/playersByPositionBaskets")
+    public Map<Position, List<Player>> playersByPositionBaskets(){
+
+        return playerRepository.findAll().parallelStream().collect(Collectors.groupingBy(Player::getPosition));
+
+    }
+    // MÉTODO JAVA 7
+    /*@GetMapping("/playersByPositionBaskets")
     public Map<Position, Collection<Player>> playersByPositionBaskets(){
 
         ListMultimap<Position, Player> playerMultiMap = ArrayListMultimap.create();
@@ -104,14 +114,11 @@ public class PlayerController {
         playerRepository.playersByPositionBaskets().forEach(
                 player -> playerMultiMap.put(player.getPosition(), player)
         );
-        /*List<Player> players = playerRepository.playersByPositionBaskets();
-
-        for( Player p : players){
-            playerMultiMap.put(p.getPosition(), p);
-        }*/
 
         return playerMultiMap.asMap();
-    }
+    }*/
+
+
 
     // GET --> ORDER PLAYERS BY PARAM
     @GetMapping("/byParams")
