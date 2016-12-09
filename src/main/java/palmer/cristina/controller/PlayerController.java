@@ -105,7 +105,7 @@ public class PlayerController {
         return playerRepository.findAll().parallelStream().collect(Collectors.groupingBy(Player::getPosition));
 
     }
-    // MÉTODO JAVA 7
+    // MÉTODO JAVA 7 (+lambda)
     /*@GetMapping("/playersByPositionBaskets")
     public Map<Position, Collection<Player>> playersByPositionBaskets(){
 
